@@ -1,0 +1,59 @@
+{
+  "name": "messenger-body",
+  "description": "Parse and process a Facebook Messenger body - framework agnostic & plugin-based",
+  "version": "0.1.0",
+  "homepage": "https://github.com/AndreasPizsa/messenger-body",
+  "author": "Andreas Pizsa (https://github.com/AndreasPizsa)",
+  "repository": "AndreasPizsa/messenger-body",
+  "bugs": {
+    "url": "https://github.com/AndreasPizsa/messenger-body/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "src",
+    "LICENSE"
+  ],
+  "main": "src/messenger-body.js",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "lint": "eslint **/*.js",
+    "test": "npm run lint && nyc mocha",
+    "commit": "git cz",
+    "commitmsg": "validate-commit-msg",
+    "precommit": "npm test",
+    "prepublish": "npm test"
+  },
+  "keywords": [
+    "express",
+    "messenger"
+  ],
+  "devDependencies": {
+    "@andreaspizsa/eslint-config": "0.0.1",
+    "chai": "^4.1.2",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
+    "eslint": "^4.8.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "husky": "^0.14.3",
+    "lodash.get": "^4.4.2",
+    "lodash.noop": "^3.0.1",
+    "mocha": "^3.5.3",
+    "nyc": "^11.2.1",
+    "sinon": "^4.0.1",
+    "validate-commit-msg": "^2.14.0"
+  },
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
