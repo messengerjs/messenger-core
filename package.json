@@ -1,19 +1,19 @@
 {
-  "name": "messenger-body",
+  "name": "messenger-core",
   "description": "Parse and process a Facebook Messenger body - framework agnostic & plugin-based",
   "version": "0.1.0",
-  "homepage": "https://github.com/AndreasPizsa/messenger-body",
+  "homepage": "https://github.com/AndreasPizsa/messenger-core",
   "author": "Andreas Pizsa (https://github.com/AndreasPizsa)",
-  "repository": "AndreasPizsa/messenger-body",
+  "repository": "AndreasPizsa/messenger-core",
   "bugs": {
-    "url": "https://github.com/AndreasPizsa/messenger-body/issues"
+    "url": "https://github.com/AndreasPizsa/messenger-core/issues"
   },
   "license": "MIT",
   "files": [
     "src",
     "LICENSE"
   ],
-  "main": "src/messenger-body.js",
+  "main": "src/messenger-core.js",
   "engines": {
     "node": ">=8"
   },

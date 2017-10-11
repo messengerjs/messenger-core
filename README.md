@@ -1,46 +1,75 @@
-#  [![NPM version](https://badge.fury.io/js/messenger-body.svg)](https://npmjs.org/package/messenger-body) [![Build Status](https://travis-ci.org/AndreasPizsa/messenger-body.svg?branch=master)](https://travis-ci.org/AndreasPizsa/messenger-body)
+[![NPM version](https://badge.fury.io/js/messenger-core.svg)](https://npmjs.org/package/messenger-core)
+[![Build Status](https://travis-ci.org/AndreasPizsa/messenger-core.svg?branch=master)](https://travis-ci.org/AndreasPizsa/messenger-core)
 
-> Solid, reliable, extensible, framework agnostic body parser and processor for Facebook Messenger bots.
+**`messenger-core`**
 
-`messenger-body` is a solid, reliable, extensible body parser and processor for Facebook Messenger bots. `messenger-body` parses a Facebook Messenger HTTP body, normalizes each message and executes a handler function for each message.
+> Write-once, run anywhere Messenger bots.
 
-### Key Features
+## Features
++ **Universal.** Build your bot once, run it anywhere
++ **Framework Agnostic.** Works with Micro, Express, Koa, Restify, Hapi and every other HTTP framework
++ **Extensible.** Enhance your bot with re-usable plugins, or share your own
 + **Solid.** 100% test coverage.
-+ **Extensible.** Augment messages with existing and custom plugins.
-+ **Framework Agnostic.** Works with Express, Koa, Restify and every other HTTP framework.
 
-> This module is intended for developers who implement framework or server
-> specific modules _on top_ of `messenger-body`.
->
-> If you are looking to use `messenger-body` with Express or Restify, please
-> see `express-messenger-body`.
+## Implementations
 
+| Framework     | Package                  |
+|---------------|--------------------------|
+| **Express**   | `express-messenger` WIP  |
+| **Micro**     | `micro-messenger`   WIP  |
+| **Koa**       | `koa-messenger`     TBD  |
+| **Restify**   | `express-messenger` TBD  |
+| **HAPI**      | `hapi-messenger`    TBD  |
+
+## Architecture
+
+```
++--------+--------+--------+--------+--------+
+| plugin | plugin | plugin | plugin | plugin |
++--------+--------+--------+--------+--------+
+|               messenger-core               |
++--------------------------------------------+
+----------- ----------- ----------- ----------
+  express      micro        koa        hapi
+----------- ----------- ----------- ----------
+```
+
+## Plugins
+
+Plugins add useful features and functionality to your bot. They are the central building blocks that make your bot a bot.
+
++ `messenger-req-log` use `req.log` for logging
++ `messenger-page-token` get the receiving page’s page access token
++ `messenger-user-profile` get sender’s user profile
++ `messenger-send` add `send` methods
++ `messenger-intl` i18n support
+
+-----
+> ** Documentation is Work in Progress **
 
 ## Installation
 
 ```sh
-$ npm install --save messenger-body
+$ npm install --save messenger-core
 ```
 
 ## Usage
 
 ```js
 const app = require('express')()
-const MessengerEventLoop = require('messenger-body')
-app.use(function(req, res) {
+const messenger = require('messenger-core')
 
-})
 
-function handleMessage(message) {
-  ...
-}
 ```
 
 ### Implementing your Message Handler function
 
-`messenger-body` calls your Message Handler function for each incoming message it receives.
+`messenger-core` calls your Message Handler function for each incoming message it receives.
 
 express-event-loop creates it
+
+# Message Types
+
 #### Postback message
 ```javascript
 {
