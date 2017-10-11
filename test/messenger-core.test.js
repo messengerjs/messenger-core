@@ -6,35 +6,35 @@ const _ = {
 const sinon = require('sinon')
 
 const expect = require('chai').expect
-const MessengerBody = require('../src/messenger-body')
+const MessengerCore = require('../src/messenger-core')
 
-describe('MessengerBody', function () {
+describe('MessengerCore', function () {
   describe('iniztialization', function () {
 
     it('should return a function', function () {
-      expect(MessengerBody()).to.be.instanceof(Function)
+      expect(MessengerCore()).to.be.instanceof(Function)
     })
 
     it('should accept a custom logger', async function () {
       const customLogger = sinon.spy()
-      const parseMessengerBody = MessengerBody({ log: { info: customLogger } })
+      const messengerCore = MessengerCore({ log: { info: customLogger } })
         .use(function (message, context) {
           context.log.info('Hello')
         })
-      await parseMessengerBody(createMessage({}))
+      await messengerCore(createMessage({}))
       expect(customLogger.called).to.equal(true)
     })
   })
 
   describe('should return `false` if the body is _not_ a Facebook Messenger Body', async function () {
     it('should return `false` if `body.object !== \'page\'`', async function () {
-      const parseMessengerBody = MessengerBody()
-      expect(await parseMessengerBody()).to.equal(false)
+      const messengerCore = MessengerCore()
+      expect(await messengerCore()).to.equal(false)
     })
 
     it('should return `false` if there are no `messaging` entries (eg webhook page updates)', async function () {
-      const parseMessengerBody = MessengerBody()
-      expect(await parseMessengerBody({
+      const messengerCore = MessengerCore()
+      expect(await messengerCore({
         object: 'page',
         entry: [{
           id: 'testentry',
@@ -44,15 +44,15 @@ describe('MessengerBody', function () {
     })
 
     it('should return `true` if the body _is_ a Facebook Messenger Body', async function () {
-      const parseMessengerBody = MessengerBody()
-      expect(await parseMessengerBody(fixtures.oneTextMessage)).to.equal(true)
+      const messengerCore = MessengerCore()
+      expect(await messengerCore(fixtures.oneTextMessage)).to.equal(true)
     })
   })
 
   describe('plugins', function () {
     beforeEach(function () {
       this.logErrors = []
-      this.parseMessengerBody = MessengerBody({
+      this.messengerCore = MessengerCore({
         log: {
           error: Array.prototype.push.bind(this.logErrors)
         }
@@ -60,18 +60,18 @@ describe('MessengerBody', function () {
     })
 
     it('should have a `use` function', function () {
-      expect(this.parseMessengerBody).to.have.property('use').which.is.instanceof(Function)
+      expect(this.messengerCore).to.have.property('use').which.is.instanceof(Function)
     })
 
     it('`use` should be chainable', function () {
-      expect(this.parseMessengerBody.use(_.noop)).to.have.property('use').which.is.instanceof(Function)
-      expect(this.parseMessengerBody.use(_.noop)).to.equal(this.parseMessengerBody)
+      expect(this.messengerCore.use(_.noop)).to.have.property('use').which.is.instanceof(Function)
+      expect(this.messengerCore.use(_.noop)).to.equal(this.messengerCore)
     })
 
     it('should execute all plugins in the order they were added', async function () {
       const array = []
       function addOne () { array.push(array.length + 1) }
-      this.parseMessengerBody
+      this.messengerCore
         .use(addOne)
         .use(addOne)
         .use(addOne)
@@ -80,7 +80,7 @@ describe('MessengerBody', function () {
         .use(function () {
           expect(array).to.deep.equal([ 1, 2, 3, 4, 5 ])
         })
-      this.parseMessengerBody(fixtures.oneTextMessage)
+      this.messengerCore(fixtures.oneTextMessage)
     })
 
     describe('Error handling', function () {
@@ -90,11 +90,11 @@ describe('MessengerBody', function () {
       const didLogSpy = sinon.spy()
 
       before(async function () {
-        const parseMessengerBody = MessengerBody({
+        const messengerCore = MessengerCore({
           log: { error: didLogSpy }
         })
-        parseMessengerBody.use(didContinueSpy)
-        await parseMessengerBody(fixtures.twoTextMessages)
+        messengerCore.use(didContinueSpy)
+        await messengerCore(fixtures.twoTextMessages)
       })
 
       it('should log any errors that occur in plugins', function () {
@@ -116,20 +116,20 @@ describe('MessengerBody', function () {
         })
 
         it('should log to console on errors if there’s no custom logger', async function () {
-          const parseMessengerBody = MessengerBody()
+          const messengerCore = MessengerCore()
             .use(function (message, context) {
               throw new Error()
             })
-          await parseMessengerBody(fixtures.oneTextMessage)
+          await messengerCore(fixtures.oneTextMessage)
           expect(console.error.called).to.equal(true)
         })
 
         it('should fallback to console if custom logger’s `error` isn\'t a function', async function () {
-          const parseMessengerBody = MessengerBody({ log: { error: 'whatever' } })
+          const messengerCore = MessengerCore({ log: { error: 'whatever' } })
             .use(function (message, context) {
               throw new Error()
             })
-          await parseMessengerBody(fixtures.oneTextMessage)
+          await messengerCore(fixtures.oneTextMessage)
           expect(console.error.called).to.equal(true)
         })
       })
@@ -140,7 +140,7 @@ describe('MessengerBody', function () {
 
     beforeEach(function () {
       this.logSpy = sinon.spy()
-      this.parseMessengerBody = MessengerBody({
+      this.messengerCore = MessengerCore({
         log: { error: this.logSpy }
       }).use((message, context) => { this.handleMessageContext = context })
       this.get = function (selector) {
@@ -151,46 +151,46 @@ describe('MessengerBody', function () {
     describe('postback', function () {
 
       it('should handle postbacks without JSON payload', async function () {
-        await this.parseMessengerBody(fixtures.onePostback)
+        await this.messengerCore(fixtures.onePostback)
         expect(this.get('topic')).to.equal('postback.HELLO_WORLD')
       })
 
       it('should handle postbacks with JSON payload', async function () {
-        await this.parseMessengerBody(fixtures.onePostbackWithJSON)
+        await this.messengerCore(fixtures.onePostbackWithJSON)
         expect(this.get('data.hello')).to.equal('world')
       })
 
       it('should handle postbacks with faulty non-JSON payload', async function () {
-        await this.parseMessengerBody(fixtures.onePostbackWithFaultyJSON)
+        await this.messengerCore(fixtures.onePostbackWithFaultyJSON)
         expect(this.get('topic')).to.equal('postback.HELLO_WORLD')
       })
 
       it('should handle postbacks with undefined/missing payload', async function () {
-        await this.parseMessengerBody(fixtures.onePostbackWithUndefinedPayload)
+        await this.messengerCore(fixtures.onePostbackWithUndefinedPayload)
         expect(this.get('topic')).to.equal('postback')
       })
     })
 
     describe('quick_reply', function () {
       it('should handle quick_reply without JSON payload', async function () {
-        await this.parseMessengerBody(fixtures.oneQuickReply)
+        await this.messengerCore(fixtures.oneQuickReply)
         expect(this.get('topic')).to.equal('quick_reply.HELLO_WORLD')
       })
 
       it('should handle quick_reply with JSON payload', async function () {
-        await this.parseMessengerBody(fixtures.oneQuickReplyWithJSON)
+        await this.messengerCore(fixtures.oneQuickReplyWithJSON)
         expect(this.get('data.hello')).to.equal('world')
       })
 
       it('should handle quick_reply with faulty non-JSON payload', async function () {
-        await this.parseMessengerBody(fixtures.oneQuickReplyWithFaultyJSON)
+        await this.messengerCore(fixtures.oneQuickReplyWithFaultyJSON)
         expect(this.get('topic')).to.equal('quick_reply.HELLO_WORLD')
       })
     })
 
     describe('text', function () {
       it('should handle text', async function () {
-        await this.parseMessengerBody(fixtures.oneTextMessage)
+        await this.messengerCore(fixtures.oneTextMessage)
         expect(this.get('topic')).to.equal('text')
         expect(this.get('data')).to.equal(
           fixtures.oneTextMessage.entry[0].messaging[0].text
@@ -200,7 +200,7 @@ describe('MessengerBody', function () {
 
     describe('referral', function () {
       it('should handle referrals', async function () {
-        await this.parseMessengerBody(fixtures.oneReferral)
+        await this.messengerCore(fixtures.oneReferral)
         expect(this.get('topic')).to.equal('referral')
         expect(this.get('data')).to.deep.equal(
           fixtures.oneReferral.entry[0].messaging[0].referral
