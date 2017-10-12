@@ -1,13 +1,14 @@
-[![NPM version](https://badge.fury.io/js/messenger-core.svg)](https://npmjs.org/package/messenger-core)
-[![Build Status](https://travis-ci.org/AndreasPizsa/messenger-core.svg?branch=master)](https://travis-ci.org/AndreasPizsa/messenger-core)
+![Build Status](https://img.shields.io/travis/AndreasPizsa/messenger-core.svg?style=flat-square)
+![](https://img.shields.io/codecov/c/github/AndreasPizsa/messenger-core.svg?style=flat-square)
+[![NPM version](https://img.shields.io/npm/v/messenger-core.svg?style=flat-square)](https://npmjs.org/package/messenger-core)
+[![Greenkeeper badge](https://badges.greenkeeper.io/AndreasPizsa/messenger-core.svg)](https://greenkeeper.io/)
 
-**`messenger-core`**
+# messenger-core
 
 > Write-once, run anywhere Messenger bots.
 
 ## Features
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/AndreasPizsa/messenger-core.svg)](https://greenkeeper.io/)
 + **Universal.** Build your bot once, run it anywhere
 + **Framework Agnostic.** Works with Micro, Express, Koa, Restify, Hapi and every other HTTP framework
 + **Extensible.** Enhance your bot with re-usable plugins, or share your own
@@ -20,7 +21,7 @@
 | **Express**   | `express-messenger` ✓    | [Github](https://github.com/AndreasPizsa/express-messenger) · [NPM](https://npmjs.com/packages/express-messenger) |
 | **HAPI**      | `hapi-messenger`         | TBD |
 | **Koa**       | `koa-messenger`          | TBD |
-| **Micro**     | `micro-messenger`        | WIP |
+| **Micro**     | `micro-messenger` ✓      | [Github](https://github.com/AndreasPizsa/micro-messenger) · [NPM](https://npmjs.com/packages/micro-messenger) |
 | **Restify**   | `express-messenger` ✓    | [Github](https://github.com/AndreasPizsa/express-messenger) · [NPM](https://npmjs.com/packages/express-messenger) |
 
 ## Architecture
