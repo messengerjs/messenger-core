@@ -15,13 +15,13 @@
 
 ## Implementations
 
-| Framework     | Package                  |
-|---------------|--------------------------|
-| **Express**   | `express-messenger` WIP  |
-| **Micro**     | `micro-messenger`   WIP  |
-| **Koa**       | `koa-messenger`     TBD  |
-| **Restify**   | `express-messenger` TBD  |
-| **HAPI**      | `hapi-messenger`    TBD  |
+| Framework     | Package                  | Links |
+|---------------|--------------------------|-----------------------------|
+| **Express**   | `express-messenger` ✓    | [Github](https://github.com/AndreasPizsa/express-messenger) · [NPM](https://npmjs.com/packages/express-messenger) |
+| **HAPI**      | `hapi-messenger`         | TBD |
+| **Koa**       | `koa-messenger`          | TBD |
+| **Micro**     | `micro-messenger`        | WIP |
+| **Restify**   | `express-messenger` ✓    | [Github](https://github.com/AndreasPizsa/express-messenger) · [NPM](https://npmjs.com/packages/express-messenger) |
 
 ## Architecture
 
@@ -47,7 +47,7 @@ Plugins add useful features and functionality to your bot. They are the central 
 + `messenger-intl` i18n support
 
 -----
-> ** Documentation is Work in Progress **
+  > ** Documentation is Work in Progress **
 
 ## Installation
 
@@ -63,12 +63,6 @@ const messenger = require('messenger-core')
 
 
 ```
-
-### Implementing your Message Handler function
-
-`messenger-core` calls your Message Handler function for each incoming message it receives.
-
-express-event-loop creates it
 
 # Message Types
 
@@ -100,14 +94,7 @@ Use cases for plugins
 + Load the user’s profile data from facebook
 + Store user data in your own database
 
-## Features
-
-### Plugins
-### JSON payloads for `postback` and `quick_reply`
-### 100% Test Coverage
-### Framework Agnostic
-
-
+## JSON payloads for `postback` and `quick_reply`
 
 ## Supported Events
 

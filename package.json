@@ -23,15 +23,18 @@
     "commit": "git cz",
     "commitmsg": "validate-commit-msg",
     "precommit": "npm test",
-    "prepublish": "npm test"
+    "prepublish": "npm test",
+    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov"
   },
   "keywords": [
-    "express",
-    "messenger"
+    "facebook",
+    "messenger",
+    "bot"
   ],
   "devDependencies": {
     "@andreaspizsa/eslint-config": "0.0.1",
     "chai": "^4.1.2",
+    "codecov": "^2.3.0",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.8.0",
