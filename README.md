@@ -6,6 +6,8 @@
 > Write-once, run anywhere Messenger bots.
 
 ## Features
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/AndreasPizsa/messenger-core.svg)](https://greenkeeper.io/)
 + **Universal.** Build your bot once, run it anywhere
 + **Framework Agnostic.** Works with Micro, Express, Koa, Restify, Hapi and every other HTTP framework
 + **Extensible.** Enhance your bot with re-usable plugins, or share your own
