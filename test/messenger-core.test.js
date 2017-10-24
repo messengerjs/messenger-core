@@ -172,7 +172,12 @@ describe('MessengerCore', function () {
     })
 
     describe('quick_reply', function () {
-      it('should handle quick_reply without JSON payload', async function () {
+      it('should handle quick_reply without any payload', async function () {
+        await this.messengerCore(fixtures.oneQuickReplyWithoutPayload)
+        expect(this.get('topic')).to.equal('quick_reply')
+      })
+
+      it('should handle quick_reply with non-JSON payload', async function () {
         await this.messengerCore(fixtures.oneQuickReply)
         expect(this.get('topic')).to.equal('quick_reply.HELLO_WORLD')
       })
@@ -193,7 +198,7 @@ describe('MessengerCore', function () {
         await this.messengerCore(fixtures.oneTextMessage)
         expect(this.get('topic')).to.equal('text')
         expect(this.get('data')).to.equal(
-          fixtures.oneTextMessage.entry[0].messaging[0].text
+          fixtures.oneTextMessage.entry[0].messaging[0].message.text
         )
       })
     })
@@ -220,18 +225,20 @@ function createMessage (...messaging) {
 }
 
 const fixtures = {
-  oneTextMessage:        createMessage({ text       : 'Hello, world!' }),
-  twoTextMessages:       createMessage({ text       : 'Hello!' }, { text: 'world!' }),
+  oneTextMessage:        createMessage({ message: { text : 'Hello, world!' } }),
+  twoTextMessages:       createMessage({ message: { text : 'Hello!' } }, { message: { text: 'world!' } }),
   onePostback:           createMessage({ postback   : { payload: 'HELLO_WORLD' } }),
   onePostbackWithJSON:   createMessage({ postback   : { payload: 'HELLO_WORLD:{"hello":"world"}' } }),
   onePostbackWithFaultyJSON:
                          createMessage({ postback   : { payload: 'HELLO_WORLD:thisisntJson' } }),
   onePostbackWithUndefinedPayload:
                          createMessage({ postback   : { payload: undefined } }),
-  oneQuickReply:         createMessage({ quick_reply: { payload: 'HELLO_WORLD' } }),
-  oneQuickReplyWithJSON: createMessage({ quick_reply: { payload: 'HELLO_WORLD:{"hello":"world"}' } }),
+  oneQuickReply:         createMessage({ message: { quick_reply: { payload: 'HELLO_WORLD' } } }),
+  oneQuickReplyWithJSON: createMessage({ message: { quick_reply: { payload: 'HELLO_WORLD:{"hello":"world"}' } } }),
   oneQuickReplyWithFaultyJSON:
-                         createMessage({ quick_reply: { payload: 'HELLO_WORLD:totallynotjson' } }),
+                         createMessage({ message: { quick_reply: { payload: 'HELLO_WORLD:totallynotjson' } } }),
+  oneQuickReplyWithoutPayload:
+                         createMessage({ message: { quick_reply: { } } }),
   oneReferral:           createMessage({
     referral: {
       type: 'OPEN_THREAD',

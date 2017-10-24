@@ -13,20 +13,37 @@ module.exports = {
     }
   },
 
-  parsePayload: function (message, context) {
-    const messageType = createContextFnsKeys
-      .find(attr => message[attr]) || 'other'
+  postback: function postback (message, context) {
+    if (!message.postback) return
 
-    const createContext = createContextFns[messageType]
-    if (!createContext) return
-
-    Object.assign(context, createContext(message[messageType]))
+    const data = message.postback
+    context.referral = data.referral
+    Object.assign(context, parsePayload(data.payload))
+    context.topic = `postback${context.topic ? ('.' + context.topic) : ''}`
   },
 
-  topic: function (message, context) {
-    const messageType = createContextFnsKeys
-      .find(attr => message[attr]) || 'other'
-    context.topic = `${messageType}${context.topic ? ('.' + context.topic) : ''}`
+  message: function message (message, context) {
+    if (!message.message) return
+
+    const data = message.message
+    if (data.quick_reply) {
+      Object.assign(context, parsePayload(data.quick_reply.payload))
+      context.topic = `quick_reply${context.topic ? ('.' + context.topic) : ''}`
+      return
+    }
+
+    /* istanbul ignore else */
+    if (data.text) {
+      context.topic = 'text'
+      context.data = data.text
+    }
+  },
+
+  referral: function referral (message, context) {
+    if (!message.referral) return
+
+    context.topic = 'referral'
+    context.data  = message.referral
   }
 }
 
@@ -60,29 +77,3 @@ function parsePayload (message) {
     data
   }
 }
-
-const createContextFns = {
-  postback: function postback (data) {
-    const context = parsePayload(data.payload)
-    context.referral = data.referral
-    return context
-  },
-
-  quick_reply: function quickReply (data) {
-    return parsePayload(data.payload)
-  },
-
-  text: function text (data) {
-    return {
-      data
-    }
-  },
-
-  referral: function referral (data) {
-    return {
-      data
-    }
-  }
-}
-
-const createContextFnsKeys = Object.keys(createContextFns)
