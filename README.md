@@ -5,24 +5,23 @@
 
 # messenger-core
 
-> Write-once, run anywhere Messenger bots.
+> Write-once, run anywhere Messenger bots, powered by plugins.
 
 ## Features
 
-+ **Universal.** Build your bot once, run it anywhere
-+ **Framework Agnostic.** Works with Micro, Express, Koa, Restify, Hapi and every other HTTP framework
-+ **Extensible.** Enhance your bot with re-usable plugins, or share your own
++ **Universal.** Build your bot once, run it anywhere. Works with Micro, Express, Koa, Restify, Hapi and any other web framework.
++ **Powered by plugins.** Build your bot with re-usable plugins, or write and share your own.
 + **Solid.** 100% test coverage.
 
 ## Implementations
 
-| Framework     | Package                  | Links |
-|---------------|--------------------------|-----------------------------|
-| **Express**   | `express-messenger` ✓    | [Github](https://github.com/AndreasPizsa/express-messenger) · [NPM](https://npmjs.com/packages/express-messenger) |
+| Framework     | Package                  | Links                                         |
+|---------------|--------------------------|-----------------------------------------------|
+| **Express**   | `express-messenger` ✓    | [Github][express-github] · [NPM][express-npm] |
 | **HAPI**      | `hapi-messenger`         | TBD |
 | **Koa**       | `koa-messenger`          | TBD |
-| **Micro**     | `micro-messenger` ✓      | [Github](https://github.com/AndreasPizsa/micro-messenger) · [NPM](https://npmjs.com/packages/micro-messenger) |
-| **Restify**   | `express-messenger` ✓    | [Github](https://github.com/AndreasPizsa/express-messenger) · [NPM](https://npmjs.com/packages/express-messenger) |
+| **Micro**     | `micro-messenger` ✓      | [Github][micro-github]   · [NPM][micro-npm]   |
+| **Restify**   | `express-messenger` ✓    | [Github][express-github] · [NPM][express-npm] |
 
 ## Architecture
 
@@ -117,3 +116,8 @@ Use cases for plugins
 ## License
 
 MIT © [Andreas Pizsa](https://github.com/AndreasPizsa)
+
+[express-github]: https://github.com/AndreasPizsa/express-messenger
+[express-npm]:    https://npmjs.com/packages/express-messenger
+[micro-github]:   https://github.com/AndreasPizsa/micro-messenger
+[micro-npm]:      https://npmjs.com/packages/micro-messenger
