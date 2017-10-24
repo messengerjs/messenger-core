@@ -1,7 +1,7 @@
 {
   "name": "messenger-core",
   "description": "Write-once, run anywhere Messenger bots, powered by plugins.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/AndreasPizsa/messenger-core",
   "author": "Andreas Pizsa (https://github.com/AndreasPizsa)",
   "repository": "AndreasPizsa/messenger-core",
